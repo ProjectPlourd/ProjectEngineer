@@ -105,15 +105,15 @@ def hangman(secret_word):
 	while (guesses_left > 0) and not (is_word_guessed(secret_word, letters_guessed)):
 		print ("You have "+ str(guesses_left)+ " guess(es) left")
 		print ("Available letters: "+ get_available_letters(letters_guessed))
-		letters_guessed.append(input())
+		letters_guessed.append(raw_input())
 		guesses_left -= 1
 		if is_word_guessed(secret_word, letters_guessed):
-			print ("Left Hip Right Hip Hurray you guessed it!")
+			print "Left Hip Right Hip Hurray you guessed it!"
 			break
 	if guesses_left == 0:
-		print("Aww I got you this time.")
-		print("You guessed", get_guessed_word(secret_word, letters_guessed))
-	print("The secret word was", secret_word)
+		print "Aww I got you this time."
+		print "You guessed", get_guessed_word(secret_word, letters_guessed)
+	print "The secret word was", secret_word
 
 
 hangman('hello')
