@@ -108,9 +108,7 @@ def is_word_guessed(secret_word, letters_guessed):
 		return True
 	else:
 		return False
-# string get_available_letters
-# string get_guessed_word
-# boolean is_word_guessed
+
 def hangman(secret_word):
 	'''
 	secret_word: string, the secret word to guess.
@@ -139,17 +137,31 @@ def hangman(secret_word):
 	# FILL IN YOUR CODE HERE AND DELETE "pass"
 	letters_guessed = []
 	guesses_left = 6
+	guess = ' '
+	warnings = 3
+	already_guessed = False
 
 	print ("Loading word list from file...")
 	print ("55900 words loaded.")
 	print ("Welcome to the game Hangman!")
 	print ("I am thinking of a secret word that has "+ str(len(secret_word))+ " letters in it.")
-
 	while (guesses_left > 0) and not (is_word_guessed(secret_word, letters_guessed)):
-		print ("You have "+ str(guesses_left)+ " guess(es) left")
-		print ("Available letters: "+ get_available_letters(letters_guessed))
-		letters_guessed.append(raw_input())
-		guesses_left -= 1
+		print "You have", warnings, "warnings left" 
+		print "You have", guesses_left, "guess(es) left"
+		print "Available letters: "+ get_available_letters(letters_guessed)
+		guess = raw_input("Please guess a letter: ")
+		for i in range(len(letters_guessed)):
+			if guess == letters_guessed[i]:
+				already_guessed = True	
+		if str.isalpha(guess) and already_guessed != True:
+			letters_guessed.append(str.lower(guess))
+			guesses_left -= 1
+		elif warnings == 0:
+			guesses_left -= 1
+		elif already_guessed:
+			warnings -= 1
+		else:
+			warnings -= 1	
 		if is_word_guessed(secret_word, letters_guessed):
 			print "Left Hip Right Hip Hurray you guessed it!"
 			break
@@ -157,8 +169,6 @@ def hangman(secret_word):
 		print "Aww I got you this time."
 		print "You guessed", get_guessed_word(secret_word, letters_guessed)
 	print "The secret word was", secret_word
-
-
 
 # When you've completed your hangman function, scroll down to the bottom
 # of the file and uncomment the first two lines to test
